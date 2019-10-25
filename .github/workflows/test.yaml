@@ -22,6 +22,7 @@ jobs:
       run: |
         conda update -y -n base conda setuptools
         conda init bash
+        source $HOME/.bashrc
         conda info -a
 
     - name: Create the conda environment
