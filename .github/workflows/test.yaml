@@ -24,23 +24,20 @@ jobs:
         conda info -a
 
     - name: Create the conda environment
-      run: conda create -q -y -n voila-tests -c conda-forge python=$PYTHON_VERSION jupyter_server==0.1.0 jupyterlab_pygments==0.1.0 pytest==3.10.1 nbconvert=5.6 pytest-cov nodejs flake8 ipywidgets matplotlib xeus-cling
+      run: conda install -q -y -n base -c conda-forge python=$PYTHON_VERSION jupyter_server==0.1.0 jupyterlab_pygments==0.1.0 pytest==3.10.1 nbconvert=5.6 pytest-cov nodejs flake8 ipywidgets matplotlib xeus-cling
       env:
         PYTHON_VERSION: ${{ matrix.python-version }}
 
     - name: Install dependencies 
       run: |
-        source activate voila-tests
         pip install ".[test]"
         cd tests/test_template; pip install .; cd ../../;
 
     - name: Flake8
       run: |
-        source activate voila-tests
         python -m flake8 voila tests setup.py
 
     - name: Run tests
       run: |
-        source activate voila-tests
         VOILA_TEST_DEBUG=1 VOILA_TEST_XEUS_CLING=1 py.test tests/ --async-test-timeout=240
         voila --help  # Making sure we can run `voila --help`
