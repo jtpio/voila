@@ -11,7 +11,7 @@ jobs:
       max-parallel: 4
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: [2.7, 3.6, 3.7]
+        python-version: [3.6, 3.7]
 
     steps:
     - uses: actions/checkout@v1
@@ -19,9 +19,18 @@ jobs:
     - name: Add conda to $PATH
       run: echo ::add-path::$CONDA/condabin
 
-    - name: Update conda
+    - name: Update conda on Mac
+      if: matrix.os == 'macos-latest'
       run: |
         sudo conda update -y -n base conda setuptools
+        
+    - name: Update conda on Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        conda update -y -n base conda setuptools
+    
+    - name: Init conda
+      run: |
         conda init bash
         conda info -a
 
