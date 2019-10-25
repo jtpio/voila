@@ -19,6 +19,7 @@ jobs:
 
     - name: Update conda
       run: |
+        conda update -q conda
         conda info -a
 
     - name: Create the conda environment
