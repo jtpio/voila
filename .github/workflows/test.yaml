@@ -19,12 +19,11 @@ jobs:
 
     - name: Update conda
       run: |
-        conda config --set always_yes yes --set changeps1 no
-        conda update -q conda
+        conda update conda
         conda info -a
 
     - name: Create the conda environment
-      run: conda create -q -n voila-tests -c conda-forge python=$PYTHON_VERSION jupyter_server==0.1.0 jupyterlab_pygments==0.1.0 pytest==3.10.1 nbconvert=5.6 pytest-cov nodejs flake8 ipywidgets matplotlib xeus-cling
+      run: conda create -q -y -n voila-tests -c conda-forge python=$PYTHON_VERSION jupyter_server==0.1.0 jupyterlab_pygments==0.1.0 pytest==3.10.1 nbconvert=5.6 pytest-cov nodejs flake8 ipywidgets matplotlib xeus-cling
       env:
         PYTHON_VERSION: ${{ matrix.python-version }}
 
