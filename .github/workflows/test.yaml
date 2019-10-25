@@ -1,0 +1,44 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  run: 
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [2.7, 3.5, 3.6, 3.7]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Add conda to $PATH
+      run: echo ::add-path::$CONDA/condabin
+
+    - name: Update conda
+      run: |
+        conda config --set always_yes yes --set changeps1 no
+        conda update -q conda
+        conda info -a
+
+    - name: Create the conda environment
+      run: conda create -q -n voila-tests -c conda-forge python=$PYTHON_VERSION jupyter_server==0.1.0 jupyterlab_pygments==0.1.0 pytest==3.10.1 nbconvert=5.6 pytest-cov nodejs flake8 ipywidgets matplotlib xeus-cling
+      env:
+        PYTHON_VERSION: ${{ matrix.python-version }}
+
+    - name: Install dependencies 
+      run: |
+        conda activate voila-tests
+        pip install ".[test]"
+        cd tests/test_template; pip install .; cd ../../;
+
+    - name: Flake8
+      run: python -m flake8 voila tests setup.py
+
+    - name: Run tests
+      run: |
+        conda activate voila-tests
+        VOILA_TEST_DEBUG=1 VOILA_TEST_XEUS_CLING=1 py.test tests/ --async-test-timeout=240
+        voila --help  # Making sure we can run `voila --help`
