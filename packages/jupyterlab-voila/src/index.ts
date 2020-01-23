@@ -1,6 +1,7 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
+  ILayoutRestorer
 } from "@jupyterlab/application";
 
 import {
@@ -83,12 +84,13 @@ const extension: JupyterFrontEndPlugin<IVoilaPreviewTracker> = {
   id: "@jupyter-voila/jupyterlab-preview:plugin",
   autoStart: true,
   requires: [INotebookTracker],
-  optional: [ICommandPalette, IMainMenu, ISettingRegistry],
+  optional: [ICommandPalette, ILayoutRestorer, IMainMenu, ISettingRegistry],
   provides: IVoilaPreviewTracker,
   activate: (
     app: JupyterFrontEnd,
     notebooks: INotebookTracker,
     palette: ICommandPalette | null,
+    restorer: ILayoutRestorer | null,
     menu: IMainMenu | null,
     settingRegistry: ISettingRegistry | null
   ) => {
@@ -96,6 +98,17 @@ const extension: JupyterFrontEndPlugin<IVoilaPreviewTracker> = {
     const tracker = new WidgetTracker<VoilaPreview>({
       namespace: "voila-preview"
     });
+
+    if (restorer) {
+      restorer.restore(tracker, {
+        command: CommandIDs.voilaRender,
+        args: widget => ({
+          url: widget.content.url,
+          label: widget.content.title.label
+        }),
+        name: widget => widget.content.id
+      });
+    }
 
     function getCurrent(args: ReadonlyJSONObject): NotebookPanel | null {
       const widget = notebooks.currentWidget;
@@ -142,17 +155,26 @@ const extension: JupyterFrontEndPlugin<IVoilaPreviewTracker> = {
     commands.addCommand(CommandIDs.voilaRender, {
       label: "Render Notebook with Voila",
       execute: async args => {
+        let url = args["url"] as string;
+        let label = args["label"] as string;
+        let widget: VoilaPreview;
+        if (url && label) {
+          widget = new VoilaPreview({ label, url, renderOnSave });
+          tracker.add(widget);
+          app.shell.add(widget);
+          return widget;
+        }
+
         const current = getCurrent(args);
         if (!current) {
           return;
         }
         const { context } = current;
         await context.save();
-
         const voilaPath = context.path;
-        const url = getVoilaUrl(voilaPath);
-        const label = PathExt.basename(voilaPath);
-        const widget = new VoilaPreview({ context, label, url, renderOnSave });
+        url = getVoilaUrl(voilaPath);
+        label = PathExt.basename(voilaPath);
+        widget = new VoilaPreview({ context, label, url, renderOnSave });
         tracker.add(widget);
         app.shell.add(widget, "main", { mode: "split-right" });
         return widget;

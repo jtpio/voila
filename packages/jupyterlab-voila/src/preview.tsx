@@ -80,15 +80,17 @@ export class VoilaPreview extends MainAreaWidget<IFrame> {
     );
 
     this.toolbar.addItem("reload", reloadButton);
-    this.toolbar.addItem("renderOnSave", renderOnSaveCheckbox);
 
-    void context.ready.then(() => {
-      context.fileChanged.connect(() => {
-        if (this.renderOnSave) {
-          this.reload();
-        }
+    if (context) {
+      this.toolbar.addItem("renderOnSave", renderOnSaveCheckbox);
+      void context.ready.then(() => {
+        context.fileChanged.connect(() => {
+          if (this.renderOnSave) {
+            this.reload();
+          }
+        });
       });
-    });
+    }
   }
 
   /**
@@ -148,9 +150,9 @@ export namespace VoilaPreview {
     label: string;
 
     /**
-     * The notebook document context.
+     * An optional notebook document context.
      */
-    context: DocumentRegistry.IContext<INotebookModel>;
+    context?: DocumentRegistry.IContext<INotebookModel>;
 
     /**
      * Whether to reload the preview on context saved.
