@@ -10,6 +10,8 @@ import { DocumentRegistry } from "@jupyterlab/docregistry";
 
 import { INotebookModel } from "@jupyterlab/notebook";
 
+import { Kernel } from "@jupyterlab/services";
+
 import { Token } from "@phosphor/coreutils";
 
 import { Signal } from "@phosphor/signaling";
@@ -19,7 +21,7 @@ import * as React from "react";
 /**
  * A class that tracks Voila Preview widgets.
  */
-export interface IVoilaPreviewTracker extends IWidgetTracker<VoilaPreview> { }
+export interface IVoilaPreviewTracker extends IWidgetTracker<VoilaPreview> {}
 
 /**
  * The Voila Preview tracker token.
@@ -99,6 +101,7 @@ export class VoilaPreview extends MainAreaWidget<IFrame> {
     if (this.isDisposed) {
       return;
     }
+    this._shutdownKernel();
     super.dispose();
     Signal.clearData(this);
   }
@@ -107,9 +110,10 @@ export class VoilaPreview extends MainAreaWidget<IFrame> {
    * Reload the preview.
    */
   reload() {
-    const iframe = this.content.node.querySelector("iframe")!;
-    if (iframe.contentWindow) {
-      iframe.contentWindow.location.reload();
+    const contentWindow = this._getIFrameContentWindow();
+    if (contentWindow) {
+      this._shutdownKernel();
+      contentWindow.location.reload();
     }
   }
 
@@ -125,6 +129,35 @@ export class VoilaPreview extends MainAreaWidget<IFrame> {
    */
   set renderOnSave(renderOnSave: boolean) {
     this._renderOnSave = renderOnSave;
+  }
+
+  /**
+   * Find the IFrame content window.
+   */
+  private _getIFrameContentWindow() {
+    const iframe = this.content.node.querySelector("iframe");
+    return iframe.contentWindow;
+  }
+
+  /**
+   * Shutdown kernel using the kernelId from the IFrame
+   */
+  private _shutdownKernel() {
+    const contentWindow = this._getIFrameContentWindow();
+    if (!contentWindow) {
+      return;
+    }
+    const configData = contentWindow.document.getElementById(
+      "jupyter-config-data"
+    );
+    if (!configData) {
+      return;
+    }
+    // manually fetch the kernelId instead of PageConfig,
+    // since it is part of the IFrame document and not the top-level document
+    const data = JSON.parse(configData.textContent);
+    const kernelId = data["kernelId"];
+    void Kernel.shutdown(kernelId);
   }
 
   private _renderOnSave: boolean;
