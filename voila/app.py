@@ -55,6 +55,7 @@ from ipython_genutils.py3compat import getcwd
 
 from .paths import ROOT, STATIC_ROOT, collect_template_paths
 from .handler import VoilaHandler
+from .stophandler import VoilaStopHandler
 from .treehandler import VoilaTreeHandler
 from ._version import __version__
 from .static_file_handler import MultiStaticFileHandler, WhiteListFileHandler
@@ -505,6 +506,9 @@ class Voila(Application):
                  }),
             ])
 
+        handlers.append(
+            (url_path_join(self.server_url, r'/api/voila/shutdown/(.*)'), VoilaStopHandler)
+        )
         self.app.add_handlers('.*$', handlers)
         self.listen()
 
