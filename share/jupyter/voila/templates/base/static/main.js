@@ -39,9 +39,12 @@ require(['static/voila'], function(voila) {
 
         async function init() {
             // it seems if we attach this to early, it will not be called
+            const matches = document.cookie.match('\\b_xsrf=([^;]*)\\b');
+            const xsrfToken = (matches && matches[1]) || '';
             window.addEventListener('beforeunload', function (e) {
                 const xhttp = new XMLHttpRequest();
                 xhttp.open("DELETE", `/api/kernels/${kernel.id}`, false);
+                xhttp.setRequestHeader('X-XSRFToken', xsrfToken);
                 xhttp.send();
                 kernel.dispose();
             });
