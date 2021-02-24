@@ -7,7 +7,8 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-import '../style/index.css';
+export * from './app';
+export * from './shell';
 
 export {
   RenderMimeRegistry,
@@ -17,4 +18,3 @@ export {
 export { extendedRendererFactories } from './rendermime';
 export { WidgetManager } from './manager';
 export { connectKernel } from './kernel';
-export { renderMathJax } from './mathjax';
