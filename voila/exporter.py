@@ -102,7 +102,8 @@ class VoilaExporter(HTMLExporter):
             resources=resources,
             **extra_context,
             static_url=self.static_url,
-            page_config={"fullStaticUrl": '/voila/template/lab/static'}
+            # TODO: do not hardcode
+            page_config={"fullStaticUrl": '/voila/static'}
         ):
             yield (output, resources)
 

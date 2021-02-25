@@ -1,5 +1,5 @@
 {%- macro voila_setup(base_url, labextensions) -%}
-<script src="{{ static_url('bundle.js') }}"></script>
+<script src="{{ page_config['fullStaticUrl'] | e }}/bundle.js"></script>
 
 <script>
   // TODO: load the JupyterLab prebuilt extensions.
