@@ -90,7 +90,7 @@ def _load_jupyter_server_extension(server_app):
         web_app.add_handlers(host_pattern, [
             (
                 # TODO: update handler
-                url_path_join(base_url, r'/voila/nbextensions/(.*)'),
+                url_path_join(base_url, r'/voila/labextensions/(.*)'),
                 FileFindHandler,
                 {
                     'path': labextensions_path,

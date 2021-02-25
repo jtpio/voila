@@ -97,7 +97,13 @@ class VoilaExporter(HTMLExporter):
                 'no_prompt': self.exclude_input_prompt and self.exclude_output_prompt,
                 }
 
-        async for output in self.template.generate_async(nb=nb_copy, resources=resources, **extra_context, static_url=self.static_url):
+        async for output in self.template.generate_async(
+            nb=nb_copy,
+            resources=resources,
+            **extra_context,
+            static_url=self.static_url,
+            page_config={"fullStaticUrl": '/voila/template/lab/static'}
+        ):
             yield (output, resources)
 
     @property

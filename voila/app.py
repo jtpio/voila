@@ -466,7 +466,7 @@ class Voila(Application):
         if self.voila_configuration.enable_labextensions:
             handlers.append(
                 (
-                    url_path_join(self.server_url, r'/voila/nbextensions/(.*)'),
+                    url_path_join(self.server_url, r'/voila/labextensions/(.*)'),
                     FileFindHandler,
                     {
                         'path': self.labextensions_path,

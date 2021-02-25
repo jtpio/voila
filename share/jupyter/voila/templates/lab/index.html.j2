@@ -47,14 +47,20 @@ var voila_heartbeat = function() {
 
 {%- block body_loop -%}
   {# from this point on, the kernel is started #}
+
+  {# Copy so we do not modify the page_config with updates. #}
+  {% set page_config_full = page_config.copy() %}
+
   {%- with kernel_id = kernel_start(nb) -%}
+    {# Set a dummy variable - we just want the side effect of the update. #}
+    {% set _ = page_config_full.update(baseUrl=resources.base_url, kernelId=kernel_id) %}
+
     <script id="jupyter-config-data" type="application/json">
-    {
-        "baseUrl": "{{resources.base_url}}",
-        "kernelId": "{{kernel_id}}"
-    }
+      {{ page_config_full | tojson }}
     </script>
+
     {% set cell_count = nb.cells|length %}
+
     {#
     Voilà is using Jinja's Template.generate method to not render the whole template in one go.
     The current implementation of Jinja will however not yield template snippets if we call a blocks' super()
