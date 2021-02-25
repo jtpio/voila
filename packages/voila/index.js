@@ -86,96 +86,98 @@ async function main() {
     require('./plugins')
   ];
 
-  /**
-   * Iterate over active plugins in an extension.
-   *
-   * #### Notes
-   * This also populates the disabled
-   */
-  function* activePlugins(extension) {
-    // Handle commonjs or es2015 modules
-    let exports;
-    if (Object.prototype.hasOwnProperty.call(extension, '__esModule')) {
-      exports = extension.default;
-    } else {
-      // CommonJS exports.
-      exports = extension;
-    }
+  // /**
+  //  * Iterate over active plugins in an extension.
+  //  *
+  //  * #### Notes
+  //  * This also populates the disabled
+  //  */
+  // function* activePlugins(extension) {
+  //   // Handle commonjs or es2015 modules
+  //   let exports;
+  //   if (Object.prototype.hasOwnProperty.call(extension, '__esModule')) {
+  //     exports = extension.default;
+  //   } else {
+  //     // CommonJS exports.
+  //     exports = extension;
+  //   }
 
-    let plugins = Array.isArray(exports) ? exports : [exports];
-    for (let plugin of plugins) {
-      if (PageConfig.Extension.isDisabled(plugin.id)) {
-        disabled.push(plugin.id);
-        continue;
-      }
-      yield plugin;
-    }
-  }
+  //   let plugins = Array.isArray(exports) ? exports : [exports];
+  //   for (let plugin of plugins) {
+  //     if (PageConfig.Extension.isDisabled(plugin.id)) {
+  //       disabled.push(plugin.id);
+  //       continue;
+  //     }
+  //     yield plugin;
+  //   }
+  // }
 
-  const extension_data = JSON.parse(
-    PageConfig.getOption('federated_extensions')
-  );
+  // const extensionData = JSON.parse(
+  //   PageConfig.getOption('federated_extensions')
+  // );
 
-  const federatedExtensionPromises = [];
-  const federatedMimeExtensionPromises = [];
-  const federatedStylePromises = [];
+  // console.log('extension data', extensionData);
 
-  const extensions = await Promise.allSettled(
-    extension_data.map(async data => {
-      await loadComponent(
-        `${URLExt.join(
-          PageConfig.getOption('fullLabextensionsUrl'),
-          data.name,
-          data.load
-        )}`,
-        data.name
-      );
-      return data;
-    })
-  );
+  // const federatedExtensionPromises = [];
+  // const federatedMimeExtensionPromises = [];
+  // const federatedStylePromises = [];
 
-  extensions.forEach(p => {
-    if (p.status === 'rejected') {
-      // There was an error loading the component
-      console.error(p.reason);
-      return;
-    }
+  // const extensions = await Promise.allSettled(
+  //   extensionData.map(async data => {
+  //     await loadComponent(
+  //       `${URLExt.join(
+  //         PageConfig.getOption('fullLabextensionsUrl'),
+  //         data.name,
+  //         data.load
+  //       )}`,
+  //       data.name
+  //     );
+  //     return data;
+  //   })
+  // );
 
-    const data = p.value;
-    if (data.extension) {
-      federatedExtensionPromises.push(createModule(data.name, data.extension));
-    }
-    if (data.mimeExtension) {
-      federatedMimeExtensionPromises.push(
-        createModule(data.name, data.mimeExtension)
-      );
-    }
-    if (data.style) {
-      federatedStylePromises.push(createModule(data.name, data.style));
-    }
-  });
+  // extensions.forEach(p => {
+  //   if (p.status === 'rejected') {
+  //     // There was an error loading the component
+  //     console.error(p.reason);
+  //     return;
+  //   }
 
-  // Add the federated extensions.
-  // TODO: Add support for disabled extensions
-  const federatedExtensions = await Promise.allSettled(
-    federatedExtensionPromises
-  );
-  federatedExtensions.forEach(p => {
-    if (p.status === 'fulfilled') {
-      for (let plugin of activePlugins(p.value)) {
-        mods.push(plugin);
-      }
-    } else {
-      console.error(p.reason);
-    }
-  });
+  //   const data = p.value;
+  //   if (data.extension) {
+  //     federatedExtensionPromises.push(createModule(data.name, data.extension));
+  //   }
+  //   if (data.mimeExtension) {
+  //     federatedMimeExtensionPromises.push(
+  //       createModule(data.name, data.mimeExtension)
+  //     );
+  //   }
+  //   if (data.style) {
+  //     federatedStylePromises.push(createModule(data.name, data.style));
+  //   }
+  // });
 
-  // Load all federated component styles and log errors for any that do not
-  (await Promise.allSettled(federatedStylePromises))
-    .filter(({ status }) => status === 'rejected')
-    .forEach(({ reason }) => {
-      console.error(reason);
-    });
+  // // Add the federated extensions.
+  // // TODO: Add support for disabled extensions
+  // const federatedExtensions = await Promise.allSettled(
+  //   federatedExtensionPromises
+  // );
+  // federatedExtensions.forEach(p => {
+  //   if (p.status === 'fulfilled') {
+  //     for (let plugin of activePlugins(p.value)) {
+  //       mods.push(plugin);
+  //     }
+  //   } else {
+  //     console.error(p.reason);
+  //   }
+  // });
+
+  // // Load all federated component styles and log errors for any that do not
+  // (await Promise.allSettled(federatedStylePromises))
+  //   .filter(({ status }) => status === 'rejected')
+  //   .forEach(({ reason }) => {
+  //     console.error(reason);
+  //   });
 
   app.registerPluginModules(mods);
 
