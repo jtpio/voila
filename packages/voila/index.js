@@ -78,7 +78,6 @@ async function main() {
         '@jupyterlab/apputils-extension:themes'
       ].includes(id)
     ),
-    require('@jupyterlab/codemirror-extension'),
     require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),

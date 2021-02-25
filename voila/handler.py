@@ -48,19 +48,12 @@ class VoilaHandler(JupyterHandler):
             self.redirect_to_file(path)
             return
 
-        if self.voila_configuration.enable_nbextensions:
-            # generate a list of nbextensions that are enabled for the classical notebook
-            # a template can use that to load classical notebook extensions, but does not have to
-            notebook_config = self.config_manager.get('notebook')
-            # except for the widget extension itself, since Voilà has its own
-            load_extensions = notebook_config.get('load_extensions', {})
-            if 'jupyter-js-widgets/extension' in load_extensions:
-                load_extensions['jupyter-js-widgets/extension'] = False
-            if 'voila/extension' in load_extensions:
-                load_extensions['voila/extension'] = False
-            nbextensions = [name for name, enabled in load_extensions.items() if enabled]
+        labextensions = []
+        if self.voila_configuration.enable_labextensions:
+            # TODO: get the federated extensions
+            print('load lab extensions')
         else:
-            nbextensions = []
+            labextensions = []
 
         notebook = await self.load_notebook(notebook_path)
         if not notebook:
@@ -100,7 +93,7 @@ class VoilaHandler(JupyterHandler):
         # render notebook to html
         resources = {
             'base_url': self.base_url,
-            'nbextensions': nbextensions,
+            'labextensions': labextensions,
             'theme': theme,
             'template': template_name,
             'metadata': {

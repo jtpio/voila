@@ -43,12 +43,24 @@ if (process.env.NODE_ENV === 'production') {
   baseConfig.mode = 'production';
 }
 
+const distRoot = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'share',
+  'jupyter',
+  'voila',
+  'templates',
+  'base',
+  'static'
+);
+
 module.exports = [
   merge(baseConfig, {
     mode: 'development',
     entry: ['./publicpath.js', './' + path.relative(__dirname, entryPoint)],
     output: {
-      path: buildDir,
+      path: distRoot,
       library: {
         type: 'var',
         name: ['_JUPYTERLAB', 'CORE_OUTPUT']
