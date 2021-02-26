@@ -17,6 +17,11 @@ import { KernelConnection } from '@jupyterlab/services/lib/kernel/default';
 
 import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
+import {
+  IJupyterWidgetRegistry,
+  IWidgetRegistryData
+} from '@jupyter-widgets/base';
+
 import { VoilaApp } from './app';
 
 import { WidgetManager as VoilaWidgetManager } from './manager';
@@ -24,18 +29,26 @@ import { WidgetManager as VoilaWidgetManager } from './manager';
 /**
  * The Voila widgets manager plugin.
  */
-const widgetManager: JupyterFrontEndPlugin<void> = {
+const widgetManager: JupyterFrontEndPlugin<IJupyterWidgetRegistry> = {
   id: '@voila-dashboards/voila:widget-manager',
   autoStart: true,
   requires: [IRenderMimeRegistry],
-  activate: async (app: JupyterFrontEnd, rendermime: IRenderMimeRegistry) => {
+  provides: IJupyterWidgetRegistry,
+  activate: async (
+    app: JupyterFrontEnd,
+    rendermime: IRenderMimeRegistry
+  ): Promise<IJupyterWidgetRegistry> => {
     const baseUrl = PageConfig.getBaseUrl();
     const kernelId = PageConfig.getOption('kernelId');
     const serverSettings = ServerConnection.makeSettings({ baseUrl });
 
     const model = await KernelAPI.getKernelModel(kernelId);
     if (!model) {
-      return;
+      return {
+        registerWidget(data: IWidgetRegistryData): void {
+          throw Error(`The model for kernel id ${kernelId} does not exist`);
+        }
+      };
     }
     const kernel = new KernelConnection({ model, serverSettings });
 
@@ -81,6 +94,12 @@ const widgetManager: JupyterFrontEndPlugin<void> = {
     void manager.build_widgets();
 
     console.log('Voila manager activated');
+
+    return {
+      registerWidget(data: IWidgetRegistryData): void {
+        manager.register(data);
+      }
+    };
   }
 };
 
