@@ -17,4 +17,5 @@ export {
 
 export { extendedRendererFactories } from './rendermime';
 export { WidgetManager } from './manager';
+
 export { connectKernel } from './kernel';

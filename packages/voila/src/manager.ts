@@ -15,58 +15,22 @@ import {
 import { output } from '@jupyter-widgets/jupyterlab-manager';
 
 import * as base from '@jupyter-widgets/base';
+
 import * as controls from '@jupyter-widgets/controls';
 
-import * as Application from '@jupyterlab/application';
-import * as AppUtils from '@jupyterlab/apputils';
-import * as CoreUtils from '@jupyterlab/coreutils';
-import * as DocRegistry from '@jupyterlab/docregistry';
-import * as OutputArea from '@jupyterlab/outputarea';
-
 import { DocumentRegistry } from '@jupyterlab/docregistry';
+
 import { INotebookModel } from '@jupyterlab/notebook';
+
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import * as LuminoWidget from '@lumino/widgets';
-import * as LuminoSignaling from '@lumino/signaling';
-import * as LuminoVirtualdom from '@lumino/virtualdom';
-import * as LuminoAlgorithm from '@lumino/algorithm';
-import * as LuminoCommands from '@lumino/commands';
-import * as LuminoDomutils from '@lumino/domutils';
 
 import { MessageLoop } from '@lumino/messaging';
 
 import { Widget } from '@lumino/widgets';
 
-import { requireLoader } from './loader';
-
 import { batchRateMap } from './utils';
-
-if (typeof window !== 'undefined' && typeof window.define !== 'undefined') {
-  window.define('@jupyter-widgets/base', base);
-  window.define('@jupyter-widgets/controls', controls);
-  window.define('@jupyter-widgets/output', output);
-
-  window.define('@jupyterlab/application', Application);
-  window.define('@jupyterlab/apputils', AppUtils);
-  window.define('@jupyterlab/coreutils', CoreUtils);
-  window.define('@jupyterlab/docregistry', DocRegistry);
-  window.define('@jupyterlab/outputarea', OutputArea);
-
-  window.define('@phosphor/widgets', LuminoWidget);
-  window.define('@phosphor/signaling', LuminoSignaling);
-  window.define('@phosphor/virtualdom', LuminoVirtualdom);
-  window.define('@phosphor/algorithm', LuminoAlgorithm);
-  window.define('@phosphor/commands', LuminoCommands);
-  window.define('@phosphor/domutils', LuminoDomutils);
-
-  window.define('@lumino/widgets', LuminoWidget);
-  window.define('@lumino/signaling', LuminoSignaling);
-  window.define('@lumino/virtualdom', LuminoVirtualdom);
-  window.define('@lumino/algorithm', LuminoAlgorithm);
-  window.define('@lumino/commands', LuminoCommands);
-  window.define('@lumino/domutils', LuminoDomutils);
-}
 
 const WIDGET_MIMETYPE = 'application/vnd.jupyter.widget-view+json';
 
@@ -89,7 +53,6 @@ export class WidgetManager extends JupyterLabManager {
       1
     );
     this._registerWidgets();
-    this._loader = requireLoader;
   }
 
   async build_widgets(): Promise<void> {
@@ -140,36 +103,6 @@ export class WidgetManager extends JupyterLabManager {
       });
     }
     return view.pWidget;
-  }
-
-  async loadClass(
-    className: string,
-    moduleName: string,
-    moduleVersion: string
-  ): Promise<any> {
-    if (
-      moduleName === '@jupyter-widgets/base' ||
-      moduleName === '@jupyter-widgets/controls' ||
-      moduleName === '@jupyter-widgets/output'
-    ) {
-      return super.loadClass(className, moduleName, moduleVersion);
-    } else {
-      // TODO: code duplicate from HTMLWidgetManager, consider a refactor
-      return this._loader(moduleName, moduleVersion).then(module => {
-        if (module[className]) {
-          return module[className];
-        } else {
-          return Promise.reject(
-            'Class ' +
-              className +
-              ' not found in module ' +
-              moduleName +
-              '@' +
-              moduleVersion
-          );
-        }
-      });
-    }
   }
 
   restoreWidgets(notebook: INotebookModel): Promise<void> {
@@ -259,6 +192,4 @@ export class WidgetManager extends JupyterLabManager {
       comm.send({ method: 'request_state' }, {});
     });
   }
-
-  private _loader: (name: any, version: any) => Promise<any>;
 }

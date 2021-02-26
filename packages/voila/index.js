@@ -27,7 +27,7 @@ if (Promise.allSettled === undefined) {
     );
 }
 
-require('../style/index.css');
+require('./style.js');
 
 function loadScript(url) {
   return new Promise((resolve, reject) => {
@@ -78,11 +78,13 @@ async function main() {
         '@jupyterlab/apputils-extension:themes'
       ].includes(id)
     ),
-    require('@jupyterlab/markdownviewer-extension'),
+    // TODO: re-add after updating to 3.1 lab packages
+    // require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
-    require('@jupyterlab/theme-light-extension'),
-    require('@jupyterlab/theme-dark-extension'),
+    // TODO: add the settings endpoint to re-enable the theme plugins?
+    // require('@jupyterlab/theme-light-extension'),
+    // require('@jupyterlab/theme-dark-extension'),
     require('./plugins')
   ];
 
