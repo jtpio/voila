@@ -79,7 +79,7 @@ module.exports = [
         },
         name: 'CORE_FEDERATION',
         shared: {
-          ...data.resolutions
+          ...data.dependencies
         }
       })
     ]
