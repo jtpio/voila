@@ -75,7 +75,7 @@ class VoilaExporter(HTMLExporter):
     def default_template_file(self):
         return 'index.html.j2'
 
-    async def generate_from_notebook_node(self, nb, resources=None, extra_context={}, **kw):
+    async def generate_from_notebook_node(self, nb, resources=None, extra_context={}, page_config={}, **kw):
         # this replaces from_notebook_node, but calls template.generate instead of template.render
         langinfo = nb.metadata.get('language_info', {})
         lexer = langinfo.get('pygments_lexer', langinfo.get('name', None))
@@ -102,8 +102,7 @@ class VoilaExporter(HTMLExporter):
             resources=resources,
             **extra_context,
             static_url=self.static_url,
-            # TODO: do not hardcode
-            page_config={"fullStaticUrl": '/voila/static'}
+            page_config=page_config
         ):
             yield (output, resources)
 

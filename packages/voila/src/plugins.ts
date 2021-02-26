@@ -3,18 +3,84 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
+import { PageConfig } from '@jupyterlab/coreutils';
+
+import { DocumentRegistry } from '@jupyterlab/docregistry';
+
+import { INotebookModel } from '@jupyterlab/notebook';
+
+import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
+
+import { KernelAPI, ServerConnection } from '@jupyterlab/services';
+
+import { KernelConnection } from '@jupyterlab/services/lib/kernel/default';
+
 import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
 import { VoilaApp } from './app';
 
+import { WidgetManager as VoilaWidgetManager } from './manager';
+
 /**
- * A example plugin for Voila
+ * The Voila widgets manager plugin.
  */
-const main: JupyterFrontEndPlugin<void> = {
-  id: '@voila-dashboards/voila:main',
+const widgetManager: JupyterFrontEndPlugin<void> = {
+  id: '@voila-dashboards/voila:widget-manager',
   autoStart: true,
-  activate: (app: JupyterFrontEnd) => {
-    console.log('Voila plugin activated');
+  requires: [IRenderMimeRegistry],
+  activate: async (app: JupyterFrontEnd, rendermime: IRenderMimeRegistry) => {
+    const baseUrl = PageConfig.getBaseUrl();
+    const kernelId = PageConfig.getOption('kernelId');
+    const serverSettings = ServerConnection.makeSettings({ baseUrl });
+
+    const model = await KernelAPI.getKernelModel(kernelId);
+    if (!model) {
+      return;
+    }
+    const kernel = new KernelConnection({ model, serverSettings });
+
+    // TODO: switch to using a real SessionContext and a session context widget manager
+    const context = {
+      sessionContext: {
+        session: {
+          kernel,
+          kernelChanged: {
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            connect: () => {}
+          }
+        },
+        statusChanged: {
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          connect: () => {}
+        },
+        kernelChanged: {
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          connect: () => {}
+        },
+        connectionStatusChanged: {
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          connect: () => {}
+        }
+      },
+      saveState: {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        connect: () => {}
+      }
+    };
+
+    const settings = {
+      saveState: false
+    };
+
+    const manager = new VoilaWidgetManager(
+      (context as unknown) as DocumentRegistry.IContext<INotebookModel>,
+      rendermime,
+      settings
+    );
+
+    void manager.build_widgets();
+
+    console.log('Voila manager activated');
   }
 };
 
@@ -48,6 +114,10 @@ const translator: JupyterFrontEndPlugin<ITranslator> = {
 /**
  * Export the plugins as default.
  */
-const plugins: JupyterFrontEndPlugin<any>[] = [main, paths, translator];
+const plugins: JupyterFrontEndPlugin<any>[] = [
+  paths,
+  translator,
+  widgetManager
+];
 
 export default plugins;

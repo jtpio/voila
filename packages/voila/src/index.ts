@@ -8,14 +8,3 @@
  ****************************************************************************/
 
 export * from './app';
-export * from './shell';
-
-export {
-  RenderMimeRegistry,
-  standardRendererFactories
-} from '@jupyterlab/rendermime';
-
-export { extendedRendererFactories } from './rendermime';
-export { WidgetManager } from './manager';
-
-export { connectKernel } from './kernel';

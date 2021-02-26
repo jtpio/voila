@@ -11,9 +11,11 @@ import asyncio
 import os
 import sys
 import traceback
+from jupyter_core.paths import jupyter_path
 
 import tornado.web
 
+from jupyterlab_server.config import get_page_config, recursive_update, LabConfig
 from jupyter_server.base.handlers import JupyterHandler
 from jupyter_server.config_manager import recursive_update
 from jupyter_server.utils import url_path_join
@@ -30,7 +32,40 @@ from .exporter import VoilaExporter
 from .paths import collect_template_paths
 
 
-class VoilaHandler(JupyterHandler):
+class PageConfigMixin:
+    def get_page_config(self):
+        base_url = self.settings.get("base_url")
+
+        page_config = {
+            "appVersion": __version__,
+            "baseUrl": self.base_url,
+            "terminalsAvailable": False,
+            "fullStaticUrl": url_path_join(self.base_url, "voila/static"),
+            "fullLabextensionsUrl": url_path_join(self.base_url, "voila/labextensions"),
+        }
+
+        mathjax_config = self.settings.get("mathjax_config", "TeX-AMS_HTML-full,Safe")
+        # TODO Remove CDN usage.
+        mathjax_url = self.settings.get(
+            "mathjax_url",
+            "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js",
+        )
+        page_config.setdefault("mathjaxConfig", mathjax_config)
+        page_config.setdefault("fullMathjaxUrl", mathjax_url)
+
+        labextensions_path = jupyter_path('labextensions')
+        recursive_update(
+            page_config,
+            get_page_config(
+                labextensions_path,
+                logger=self.log,
+            ),
+        )
+        return page_config
+
+
+
+class VoilaHandler(JupyterHandler, PageConfigMixin):
 
     def initialize(self, **kwargs):
         self.notebook_path = kwargs.pop('notebook_path', [])    # should it be []
@@ -47,13 +82,6 @@ class VoilaHandler(JupyterHandler):
         if self.notebook_path and path:  # when we are in single notebook mode but have a path
             self.redirect_to_file(path)
             return
-
-        labextensions = []
-        if self.voila_configuration.enable_labextensions:
-            # TODO: get the federated extensions
-            print('load lab extensions')
-        else:
-            labextensions = []
 
         notebook = await self.load_notebook(notebook_path)
         if not notebook:
@@ -93,7 +121,6 @@ class VoilaHandler(JupyterHandler):
         # render notebook to html
         resources = {
             'base_url': self.base_url,
-            'labextensions': labextensions,
             'theme': theme,
             'template': template_name,
             'metadata': {
@@ -144,7 +171,7 @@ class VoilaHandler(JupyterHandler):
         self.set_header('Pragma', 'no-cache')
         self.set_header('Expires', '0')
         # render notebook in snippets, and flush them out to the browser can render progresssively
-        async for html_snippet, resources in self.exporter.generate_from_notebook_node(notebook, resources=resources, extra_context=extra_context):
+        async for html_snippet, resources in self.exporter.generate_from_notebook_node(notebook, resources=resources, extra_context=extra_context, page_config=self.get_page_config()):
             self.write(html_snippet)
             self.flush()  # we may not want to consider not flushing after each snippet, but add an explicit flush function to the jinja context
             # yield  # give control back to tornado's IO loop, so it can handle static files or other requests
