@@ -79,6 +79,7 @@ def _load_jupyter_server_extension(server_app):
     ])
 
     # Serving lab extensions
+    # TODO: reuse existing lab server endpoint?
     if voila_configuration.enable_labextensions:
         # First look into 'labextensions_path' configuration key (classic notebook)
         # and fall back to default path for labextensions (jupyter server).
