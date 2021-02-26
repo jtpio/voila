@@ -3,6 +3,8 @@
 
 // Inspired by: https://github.com/jupyterlab/jupyterlab/blob/master/dev_mode/index.js
 
+import './style.css';
+
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 
 import { VoilaApp } from './app';
@@ -26,8 +28,6 @@ if (Promise.allSettled === undefined) {
       )
     );
 }
-
-require('./style.js');
 
 function loadScript(url) {
   return new Promise((resolve, reject) => {

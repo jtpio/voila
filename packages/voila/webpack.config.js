@@ -28,10 +28,10 @@ fs.ensureDirSync(buildDir);
 // Copy files to the build directory
 const libDir = path.resolve(__dirname, 'lib');
 const index = path.resolve(__dirname, 'index.js');
-const style = path.resolve(__dirname, 'style.js');
+const style = path.resolve(__dirname, 'style.css');
 fs.copySync(libDir, buildDir);
 fs.copySync(index, path.resolve(buildDir, 'index.js'));
-fs.copySync(style, path.resolve(buildDir, 'style.js'));
+fs.copySync(style, path.resolve(buildDir, 'style.css'));
 
 const extras = Build.ensureAssets({
   packageNames: names,
