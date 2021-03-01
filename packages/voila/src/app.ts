@@ -3,7 +3,12 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
+// TODO: export from upstream?
+import { createRendermimePlugins } from '@jupyterlab/application/lib/mimerenderers';
+
 import { PageConfig } from '@jupyterlab/coreutils';
+
+import { IRenderMime } from '@jupyterlab/rendermime';
 
 import { IShell, VoilaShell } from './shell';
 
@@ -20,6 +25,12 @@ export class VoilaApp extends JupyterFrontEnd<IShell> {
     super({
       shell: options.shell
     });
+
+    if (options.mimeExtensions) {
+      for (const plugin of createRendermimePlugins(options.mimeExtensions)) {
+        this.registerPlugin(plugin);
+      }
+    }
   }
 
   /**
@@ -111,7 +122,21 @@ export namespace App {
   /**
    * The instantiation options for an App application.
    */
-  export type IOptions = JupyterFrontEnd.IOptions<IShell>;
+  export interface IOptions
+    extends JupyterFrontEnd.IOptions<IShell>,
+      Partial<IInfo> {
+    paths?: Partial<JupyterFrontEnd.IPaths>;
+  }
+
+  /**
+   * The information about a Voila application.
+   */
+  export interface IInfo {
+    /**
+     * The mime renderer extensions.
+     */
+    readonly mimeExtensions: IRenderMime.IExtensionModule[];
+  }
 
   /**
    * The interface for a module that exports a plugin or plugins as

@@ -12,6 +12,7 @@
     "@jupyter-widgets/controls": "^3.0.0",
     "@jupyter-widgets/jupyterlab-manager": "^3.0.0",
     "@jupyterlab/apputils-extension": "^3.0.0",
+    "@jupyterlab/json-extension": "^3.0.0",
     "@jupyterlab/markdownviewer-extension": "^3.0.0",
     "@jupyterlab/mathjax2-extension": "^3.0.0",
     "@jupyterlab/rendermime-extension": "^3.0.0",

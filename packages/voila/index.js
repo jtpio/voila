@@ -67,8 +67,6 @@ async function createModule(scope, module) {
  * The main function
  */
 async function main() {
-  const app = new VoilaApp();
-
   const disabled = [];
   let mods = [
     // @jupyterlab plugins
@@ -87,6 +85,8 @@ async function main() {
     // require('@jupyterlab/theme-dark-extension'),
     require('./plugins')
   ];
+
+  const mimeExtensions = [require('@jupyterlab/json-extension')];
 
   /**
    * Iterate over active plugins in an extension.
@@ -174,6 +174,20 @@ async function main() {
     }
   });
 
+  // Add the federated mime extensions.
+  const federatedMimeExtensions = await Promise.allSettled(
+    federatedMimeExtensionPromises
+  );
+  federatedMimeExtensions.forEach(p => {
+    if (p.status === 'fulfilled') {
+      for (let plugin of activePlugins(p.value)) {
+        mimeExtensions.push(plugin);
+      }
+    } else {
+      console.error(p.reason);
+    }
+  });
+
   // Load all federated component styles and log errors for any that do not
   (await Promise.allSettled(federatedStylePromises))
     .filter(({ status }) => status === 'rejected')
@@ -181,9 +195,12 @@ async function main() {
       console.error(reason);
     });
 
+  const app = new VoilaApp({ mimeExtensions });
   app.registerPluginModules(mods);
-
   await app.start();
+
+  // TODO: exposed for debugging, remove?
+  window.app = app;
 }
 
 window.addEventListener('load', main);
