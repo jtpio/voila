@@ -89,6 +89,7 @@ setup_args = dict(
     install_requires=[
         "jupyter_server>=0.3.0,<2.0.0",
         "jupyter_client>=6.1.3,<7",
+        "jupyterlab_server>=2.3.0,<3",
         "nbclient>=0.4.0,<0.6",
         "nbconvert>=6.0.0,<7",
     ],

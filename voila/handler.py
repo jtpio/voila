@@ -15,7 +15,7 @@ from jupyter_core.paths import jupyter_path
 
 import tornado.web
 
-from jupyterlab_server.config import get_page_config, recursive_update, LabConfig
+from jupyterlab_server.config import get_page_config, recursive_update
 from jupyter_server.base.handlers import JupyterHandler
 from jupyter_server.config_manager import recursive_update
 from jupyter_server.utils import url_path_join
