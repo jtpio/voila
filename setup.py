@@ -24,7 +24,7 @@ lab_extension_dest = os.path.join(HERE, name, "labextension")
 # Representative files that should exist after a successful build
 jstargets = [
     os.path.join(
-        HERE, "share", "jupyter", "voila", "templates", "base", "static", "bundle.js"
+        HERE, "share", "jupyter", "voila", "templates", "base", "static", "voila.js"
     ),
     os.path.join(lab_extension_dest, "package.json"),
 ]

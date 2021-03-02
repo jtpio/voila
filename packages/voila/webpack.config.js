@@ -69,7 +69,7 @@ module.exports = [
         type: 'var',
         name: ['_JUPYTERLAB', 'CORE_OUTPUT']
       },
-      filename: 'bundle.js'
+      filename: 'voila.js'
     },
     plugins: [
       new ModuleFederationPlugin({
