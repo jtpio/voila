@@ -70,17 +70,12 @@ async function main() {
   const disabled = [];
   let mods = [
     // @jupyterlab plugins
-    require('@jupyterlab/apputils-extension').default.filter(({ id }) =>
-      [
-        '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes'
-      ].includes(id)
-    ),
     // TODO: re-add after updating to 3.1 lab packages
     // require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
     // TODO: add the settings endpoint to re-enable the theme plugins?
+    // This would also need the theme manager plugin and settings
     // require('@jupyterlab/theme-light-extension'),
     // require('@jupyterlab/theme-dark-extension'),
     require('./plugins')
