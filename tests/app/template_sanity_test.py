@@ -15,4 +15,4 @@ async def test_lists_extension(http_server_client, base_url, voila_app):
     response = await http_server_client.fetch(base_url)
     assert response.code == 200
     html_text = response.body.decode('utf-8')
-    assert f'/voila/static/voila.js' in html_text
+    assert '/voila/static/voila.js' in html_text
