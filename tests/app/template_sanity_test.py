@@ -16,4 +16,3 @@ async def test_lists_extension(http_server_client, base_url, voila_app):
     assert response.code == 200
     html_text = response.body.decode('utf-8')
     assert f'/voila/templates/{voila_app.voila_configuration.template}/static/voila.js' in html_text
-    assert '/voila/static/require.min.js' in html_text
