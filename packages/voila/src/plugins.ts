@@ -5,10 +5,6 @@ import {
 
 import { PageConfig } from '@jupyterlab/coreutils';
 
-import { DocumentRegistry } from '@jupyterlab/docregistry';
-
-import { INotebookModel } from '@jupyterlab/notebook';
-
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import { KernelAPI, ServerConnection } from '@jupyterlab/services';
@@ -99,47 +95,11 @@ const widgetManager: JupyterFrontEndPlugin<IJupyterWidgetRegistry> = {
       };
     }
     const kernel = new KernelConnection({ model, serverSettings });
+    const manager = new VoilaWidgetManager(kernel, rendermime);
 
-    // TODO: switch to using a real SessionContext and a session context widget manager
-    const context = {
-      sessionContext: {
-        session: {
-          kernel,
-          kernelChanged: {
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            connect: () => {}
-          }
-        },
-        statusChanged: {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          connect: () => {}
-        },
-        kernelChanged: {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          connect: () => {}
-        },
-        connectionStatusChanged: {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          connect: () => {}
-        }
-      },
-      saveState: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        connect: () => {}
-      }
-    };
-
-    const settings = {
-      saveState: false
-    };
-
-    const manager = new VoilaWidgetManager(
-      (context as unknown) as DocumentRegistry.IContext<INotebookModel>,
-      rendermime,
-      settings
-    );
-
-    void manager.build_widgets();
+    manager.restored.connect(() => {
+      void manager.build_widgets();
+    });
 
     console.log('Voila manager activated');
 
