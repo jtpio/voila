@@ -1334,56 +1334,56 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jupyter-widgets/base-manager@^1.0.0-alpha.2":
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@jupyter-widgets/base-manager/-/base-manager-1.0.0-alpha.2.tgz#1cf4795446610d42fb411b909a365165f80d6c48"
-  integrity sha512-d5lCQmVaI/oad2VLW7RZ792ecfFTkSdMRJkko7w2tHwUN/h9ytiU58ngET2dyGHB6Q1fDW1vMM67XDdVcKdZ0Q==
+"@jupyter-widgets/base-manager@^1.0.0-alpha.3":
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@jupyter-widgets/base-manager/-/base-manager-1.0.0-alpha.3.tgz#ddc73c46859528b614e87a1e78902d1df5cb4fc3"
+  integrity sha512-HA4AH+sfoksaYs10aBsKbf0+ggCT5MH8O03c5haO8971ax8uNeQSXADqPQ0qHAMmrY6v5T5bzJ0wQS2Cbvlc8w==
   dependencies:
-    "@jupyter-widgets/base" "^5.0.0-alpha.2"
+    "@jupyter-widgets/base" "^5.0.0-alpha.3"
     "@jupyterlab/services" "^6.0.0"
     "@lumino/coreutils" "^1.4.2"
     base64-js "^1.2.1"
 
-"@jupyter-widgets/base@^5.0.0-alpha.2":
-  version "5.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@jupyter-widgets/base/-/base-5.0.0-alpha.2.tgz#09496121a2b3eb3e952805b85d82db59e8c09284"
-  integrity sha512-ENfr0xz2FzZ+km1s7nQdYWJo0/L2jtDTdWJb2ako4IIU7hkgYXQfxvl/MKtC3nztwA+yDPNx//dB/OYUGka72g==
+"@jupyter-widgets/base@^5.0.0-alpha.3":
+  version "5.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@jupyter-widgets/base/-/base-5.0.0-alpha.3.tgz#fb01263d6ab6985f1b48dcd55e1c5e8fc6e59147"
+  integrity sha512-x4NQA6LydWgintI2xF2qKx9rdqyDRm3t7NXATX6reQfTfiRY9jzTWGN188PtAt80SXLHjCFK4RiIm8SXY9Ip8Q==
   dependencies:
     "@jupyterlab/services" "^6.0.0"
     "@lumino/coreutils" "^1.2.0"
     "@lumino/messaging" "^1.2.1"
     "@lumino/widgets" "^1.3.0"
-    "@types/backbone" "1.4.1"
+    "@types/backbone" "1.4.10"
     "@types/lodash" "^4.14.134"
-    backbone "1.2.3"
+    backbone "1.4.0"
     jquery "^3.1.1"
     lodash "^4.17.4"
 
-"@jupyter-widgets/controls@^4.0.0-alpha.2":
-  version "4.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@jupyter-widgets/controls/-/controls-4.0.0-alpha.2.tgz#ebb6601e51ce5289556b0f7f5a2ad97b16e4d25d"
-  integrity sha512-PrNbBBg2Ybcmoio0AQBxbiRrlym6TPIp0+AE4cRWadA/LIQSzyjE8XBOzof9PoWDEws/qya6zDIbmNM8eEO2PA==
+"@jupyter-widgets/controls@^4.0.0-alpha.3":
+  version "4.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@jupyter-widgets/controls/-/controls-4.0.0-alpha.3.tgz#af7417dcf1de53db73d0fadb876d0e9a91f0af3f"
+  integrity sha512-DrvUs2iHA1rGSnkQFBH3uOTEGu6/NHxrAd8lO46sgueNEqGgnLrAlpE/UqJDAHwriCnH/I0J0KCq2PqbDZYJ+g==
   dependencies:
-    "@jupyter-widgets/base" "^5.0.0-alpha.2"
+    "@jupyter-widgets/base" "^5.0.0-alpha.3"
     "@lumino/algorithm" "^1.2.3"
     "@lumino/domutils" "^1.1.7"
     "@lumino/messaging" "^1.3.3"
     "@lumino/signaling" "^1.3.5"
     "@lumino/widgets" "^1.11.1"
-    d3-color "^1.4.0"
-    d3-format "^1.3.0"
+    d3-color "^3.0.1"
+    d3-format "^3.0.1"
     jquery "^3.1.1"
-    nouislider "^14.1.1"
+    nouislider "15.2.0"
 
-"@jupyter-widgets/jupyterlab-manager@^4.0.0-alpha.1":
-  version "4.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@jupyter-widgets/jupyterlab-manager/-/jupyterlab-manager-4.0.0-alpha.1.tgz#6e6e4eee2d915f792a62ac5bdf769498911c83b5"
-  integrity sha512-q6OBA/FW3SHYP6hZI3eldy/MZW80XP6WAs1jstwhnI1GqrJPyvEHHRggHeGmDKAahv0n5sIsErN7JTD4U5h+fg==
+"@jupyter-widgets/jupyterlab-manager@^4.0.0-alpha.2":
+  version "4.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@jupyter-widgets/jupyterlab-manager/-/jupyterlab-manager-4.0.0-alpha.2.tgz#8fb11a3c27cee0bbe3749857c1cb5bd551b7d8a6"
+  integrity sha512-SetaQLTPSrzy4Gym8BSmOsZvvJHucuJJS3232FhvjgHyLRGBgQxicuSKmpH6rLNnH0YhHxx4lwEgf3pwtzZenQ==
   dependencies:
-    "@jupyter-widgets/base" "^5.0.0-alpha.2"
-    "@jupyter-widgets/base-manager" "^1.0.0-alpha.2"
-    "@jupyter-widgets/controls" "^4.0.0-alpha.2"
-    "@jupyter-widgets/output" "^5.0.0-alpha.2"
+    "@jupyter-widgets/base" "^5.0.0-alpha.3"
+    "@jupyter-widgets/base-manager" "^1.0.0-alpha.3"
+    "@jupyter-widgets/controls" "^4.0.0-alpha.3"
+    "@jupyter-widgets/output" "^5.0.0-alpha.3"
     "@jupyterlab/application" "^3.0.0"
     "@jupyterlab/docregistry" "^3.0.0"
     "@jupyterlab/logconsole" "^3.0.0"
@@ -1404,14 +1404,14 @@
     "@lumino/widgets" "^1.3.0"
     "@types/backbone" "1.4.1"
     jquery "^3.1.1"
-    semver "^6.1.1"
+    semver "^7.3.5"
 
-"@jupyter-widgets/output@^5.0.0-alpha.2":
-  version "5.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@jupyter-widgets/output/-/output-5.0.0-alpha.2.tgz#6d3ec5ab5da65972d10a4aa0562121585a11ef41"
-  integrity sha512-8jLmp9WcozjO9n1vSmhYERFjs1hx1dcCr+g46bW33bw7k4HX4CmOdQKBJXf89ZHUH9RNWUc8ze4LbXqiby30Vw==
+"@jupyter-widgets/output@^5.0.0-alpha.3":
+  version "5.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@jupyter-widgets/output/-/output-5.0.0-alpha.3.tgz#43980ad8665401c3c3014048c91ee1e342b63cf9"
+  integrity sha512-s8CGsdNOS71F6K09Ltgccj+cMA67Yx/wrFQOa0yRJp9N4Tic1ZBUouEr1tbWtNq1Q7NQf4pJ61UREWQY/YEpFQ==
   dependencies:
-    "@jupyter-widgets/base" "^5.0.0-alpha.2"
+    "@jupyter-widgets/base" "^5.0.0-alpha.3"
 
 "@jupyterlab/application@^3.0.0", "@jupyterlab/application@^3.0.6":
   version "3.0.6"
@@ -2729,7 +2729,7 @@
     "@lumino/coreutils" "^1.8.2"
     "@lumino/widgets" "^1.26.2"
 
-"@lumino/collections@^1.6.2":
+"@lumino/collections@^1.3.3", "@lumino/collections@^1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@lumino/collections/-/collections-1.6.2.tgz#9cbfd54e81aefbc1693d8dbc2b3b45a2c011b8cd"
   integrity sha512-keStZ5Vv4iua6EZAY1RouDmGe7JJq46NQSbw96Q1AvLqFPwLl4ll3cyPBlnIgMsJqeHUP/UZ7ef7Akf744pLBQ==
@@ -3199,6 +3199,14 @@
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@types/backbone/-/backbone-1.4.1.tgz#aa03f9f69994bd96646c50cfc70b5f30d38aafaa"
   integrity sha512-KYfGuQy4d2vvYXbn0uHFZ6brFLndatTMomxBlljpbWf4kFpA3BG/6LA3ec+J9iredrX6eAVI7sm9SVAvwiIM6g==
+  dependencies:
+    "@types/jquery" "*"
+    "@types/underscore" "*"
+
+"@types/backbone@1.4.10":
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/@types/backbone/-/backbone-1.4.10.tgz#042e72ffc966fe920ed02ff92afa66984a036844"
+  integrity sha512-X6UM8N9i4WFtO1F53Z3DE7mjI7UxEfxyFtMTYHOPFhYFvExDuu0UJENstnA023+/FnVOdxltMIKc4picZxW4dA==
   dependencies:
     "@types/jquery" "*"
     "@types/underscore" "*"
@@ -4180,12 +4188,12 @@ babel-preset-jest@^26.6.2:
     babel-plugin-jest-hoist "^26.6.2"
     babel-preset-current-node-syntax "^1.0.0"
 
-backbone@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/backbone/-/backbone-1.2.3.tgz#c22cfd07fc86ebbeae61d18929ed115e999d65b9"
-  integrity sha1-wiz9B/yG676uYdGJKe0RXpmdZbk=
+backbone@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/backbone/-/backbone-1.4.0.tgz#54db4de9df7c3811c3f032f34749a4cd27f3bd12"
+  integrity sha512-RLmDrRXkVdouTg38jcgHhyQ/2zjg7a8E6sz2zxfz21Hh17xDJYUHBZimVIt5fUyS8vbfpeSmTL3gUjTEvUV3qQ==
   dependencies:
-    underscore ">=1.7.0"
+    underscore ">=1.8.3"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -5081,15 +5089,15 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
-d3-color@^1.4.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.4.1.tgz#c52002bf8846ada4424d55d97982fef26eb3bc8a"
-  integrity sha512-p2sTHSLCJI2QKunbGb7ocOh7DgTAn8IrLx21QRc/BSnodXM4sv6aLQlnfpvehFMLZEfBc6g9pH9SWQccFYfJ9Q==
+d3-color@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-3.0.1.tgz#03316e595955d1fcd39d9f3610ad41bb90194d0a"
+  integrity sha512-6/SlHkDOBLyQSJ1j1Ghs82OIUXpKWlR0hCsw0XrLSQhuUPuCSmLQ1QPH98vpnQxMUQM2/gfAkUEWsupVpd9JGw==
 
-d3-format@^1.3.0:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.4.5.tgz#374f2ba1320e3717eb74a9356c67daee17a7edb4"
-  integrity sha512-J0piedu6Z8iB6TbIGfZgDzfXxUFN3qQRMofy2oPdXzQibYGqPB/9iMcxr/TGalU+2RsyDO+U4f33id8tbnSRMQ==
+d3-format@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-3.0.1.tgz#e41b81b2ab79277141ec1404aa5d05001da64084"
+  integrity sha512-hdL7+HBIohpgfolhBxr1KX47VMD6+vVD/oEFrxk5yhmzV2prk99EkFKYpXuhVkFpTgHdJ6/4bYcjdLPPXV4tIA==
 
 dargs@^4.0.1:
   version "4.1.0"
@@ -8904,10 +8912,10 @@ normalize.css@^8.0.1:
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
   integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
-nouislider@^14.1.1:
-  version "14.6.4"
-  resolved "https://registry.yarnpkg.com/nouislider/-/nouislider-14.6.4.tgz#81eb9544309a59b013293278951661da69e46713"
-  integrity sha512-PVCGYl+aC7/nVEbW61ypJWfuW3UCpvctz/luxpt4byxxli1FFyjBX9NIiy4Yak9AaO6a5BkPGfFYMCW4eg3eeQ==
+nouislider@15.2.0:
+  version "15.2.0"
+  resolved "https://registry.yarnpkg.com/nouislider/-/nouislider-15.2.0.tgz#21d6c94b34c70fe8097c3806f5e48eaa97332bd9"
+  integrity sha512-LoZwN+wwU+z/0/UtjQY8VUcVElFJX6GfHkgJ5z1NIt/+KpOsjxEW4EAtBkBWvHNxf9HBzR62K6ft9NpNBkA5/w==
 
 npm-bundled@^1.0.1:
   version "1.1.2"
@@ -10495,7 +10503,7 @@ semver@7.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
 
-semver@7.x, semver@^7.2.1, semver@^7.3.2, semver@^7.3.4:
+semver@7.x, semver@^7.2.1, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
   version "7.3.5"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
   integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
@@ -11657,10 +11665,10 @@ unbox-primitive@^1.0.1:
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
 
-underscore@>=1.7.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.12.0.tgz#4814940551fc80587cef7840d1ebb0f16453be97"
-  integrity sha512-21rQzss/XPMjolTiIezSu3JAjgagXKROtNrYFEOWK109qY1Uv2tVjPTZ1ci2HgvQDA16gHYSthQIJfB+XId/rQ==
+underscore@>=1.8.3:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
+  integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

@@ -9,7 +9,7 @@
 
 import { WidgetRenderer, output } from '@jupyter-widgets/jupyterlab-manager';
 
-import { KernelWidgetManager } from '@jupyter-widgets/jupyterlab-manager/lib/manager';
+import { KernelWidgetManager } from '@jupyter-widgets/jupyterlab-manager';
 
 import * as base from '@jupyter-widgets/base';
 
