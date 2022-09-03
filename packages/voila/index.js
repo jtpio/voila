@@ -105,8 +105,6 @@ async function main() {
     PageConfig.getOption('federated_extensions')
   );
 
-  console.log('extension data', extensionData);
-
   const federatedExtensionPromises = [];
   const federatedMimeExtensionPromises = [];
   const federatedStylePromises = [];

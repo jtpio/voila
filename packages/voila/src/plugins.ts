@@ -123,8 +123,6 @@ const widgetManager: JupyterFrontEndPlugin<IJupyterWidgetRegistry> = {
       kernel.dispose();
     });
 
-    console.log('Voila manager activated');
-
     return {
       registerWidget(data: IWidgetRegistryData): void {
         manager.register(data);
